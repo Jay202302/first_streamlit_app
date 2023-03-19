@@ -25,7 +25,12 @@ streamlit.dataframe(my_fruit_list)
 # new section to display Fruityvice API response
 import requests
 streamlit.header('Fruityvice Fruit Advice !')
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+
+# using static url
+# fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
 
 # just writes the response code for e.g 200
 # streamlit.text(fruityvice_response)
