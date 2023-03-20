@@ -28,35 +28,40 @@ streamlit.dataframe(fruits_to_show)
 # Display the table on the page.
 streamlit.dataframe(my_fruit_list)
 
-# accept user input
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
-
 # new section to display Fruityvice API response
 #import requests
-streamlit.header('Fruityvice Fruit Advice !')
+streamlit.header('Fruityvice Fruit Advice!')
+try:
+  # accept user input
+  fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+  streamlit.write('The user entered ', fruit_choice)
+  if not fruit_choice:
+    streamlit.error("Please select a fruit to get information.")
+  else
+    # using static url
+    # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+    
+    # using url with appended components
+    # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
+    
+    # using url with variable
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    
+    # just writes the response code for e.g 200
+    # streamlit.text(fruityvice_response)
+    
+    # just write the data to the screen
+    # streamlit.text(fruityvice_response.json())
+    
+    # normalizes the json version of data
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    
+    # prints normalised json data in tabular format
+    streamlit.dataframe(fruityvice_normalized)
 
-# using static url
-# fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-
-# using url with appended components
-# fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
-
-# using url with variable
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
-
-# just writes the response code for e.g 200
-# streamlit.text(fruityvice_response)
-
-# just write the data to the screen
-# streamlit.text(fruityvice_response.json())
-
-# normalizes the json version of data
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-
-# prints normalised json data in tabular format
-streamlit.dataframe(fruityvice_normalized)
-
+except URLError as e:
+  streamlit.error()
+      
 # don't run below this
 streamlit.stop()
 
