@@ -28,6 +28,31 @@ streamlit.dataframe(fruits_to_show)
 # Display the table on the page.
 streamlit.dataframe(my_fruit_list)
 
+# create function
+def get_fruityvice_data(this_fruit_choice):
+  # import requests
+  # using static url
+  # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+   
+  # using url with appended components
+  # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
+   
+  # using url with variable
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    
+  # just writes the response code for e.g 200
+  # streamlit.text(fruityvice_response)
+    
+  # just write the data to the screen
+  # streamlit.text(fruityvice_response.json())
+    
+  # normalizes the json version of data
+  fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    
+  # prints normalised json data in tabular format
+  return (fruityvice_normalized
+          
+
 # new section to display Fruityvice API response
 streamlit.header('Fruityvice Fruit Advice!')
 try:
@@ -36,27 +61,9 @@ try:
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:
-    # import requests
-    # using static url
-    # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
-    
-    # using url with appended components
-    # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+"kiwi")
-    
-    # using url with variable
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-    
-    # just writes the response code for e.g 200
-    # streamlit.text(fruityvice_response)
-    
-    # just write the data to the screen
-    # streamlit.text(fruityvice_response.json())
-    
-    # normalizes the json version of data
-    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-    
-    # prints normalised json data in tabular format
-    streamlit.dataframe(fruityvice_normalized)
+     back_from_function =  get_fruityvice_data(fruit_choice)
+     streamlit.dataframe(back_from_function)
+          
 
 except URLError as e:
   streamlit.error()
