@@ -37,7 +37,7 @@ try:
   streamlit.write('The user entered ', fruit_choice)
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
-  else
+  else:
     # using static url
     # fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
     
